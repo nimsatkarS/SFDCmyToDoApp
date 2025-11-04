@@ -1,0 +1,69 @@
+<template>
+  <!-- 🧭 Main Container -->
+ <lightning-layout multiple-rows horizontal-align="center" class="slds-m-around_medium slds-p-around_medium">
+
+<!-- Heading layout item -->
+ <lightning-layout-item  class="slds-text-align_center slds-m-bottom_large" horizontal-align="center" size="12">
+    <h1 class="slds-text-heading_large slds-p-around_medium">My To-Do App</h1>
+ </lightning-layout-item>
+
+<!-- Input Form Layout -->
+ <lightning-layout class="slds-box slds-p-around_large slds-size_6-of-12 slds-medium-size_8-of-12 slds-small-size_12-of-12 slds-theme_default" 
+ horizontal-align="" multiple-rows>
+    <!-- <lightning-layout-item size="12" > -->
+        <!-- Input Fields Layout Item -->
+        <lightning-layout-item class="slds-m-around_small slds-float-left" size="4">
+        <lightning-input label="Taske Name" value={taskName} onchange={handleTask} placeholder="Task Name"></lightning-input>
+        </lightning-layout-item>
+
+        <lightning-layout-item class="slds-align-center" size="3">
+        <lightning-input type="date" label="Date" value={date} onchange={handleDate}></lightning-input>
+        </lightning-layout-item>
+
+        <lightning-input label="Description" value={description} onchange={handleDesc} placeholder="Description" ></lightning-input>
+        <lightning-input label="Today New Learning" value={newLearning} onchange={handleLearning} placeholder="Today's New Learning"></lightning-input>
+        <lightning-combobox label="Priority" value={priority} placeholder="Priority" options={PriorityOptions} onchange={handlePriority}></lightning-combobox>
+       
+        <!-- BUTTON CODE  -->
+      <div class="slds-text-align_center slds-m-top_large">
+           <lightning-button  label="Add Item" onclick={addTaskItem} variant="brand"></lightning-button>
+      </div>
+
+      <!-- Display Added Task -->
+       <!-- If Data is equal to True -->
+     <template if:true={taskName}>
+            <ul class="slds-p-around_medium">
+                <!-- Iterate the Object Record in teh following Templat -->
+                <template for:each={taskName} for:item="task">
+                    <!-- used when rendering lists as the unique key. -->
+                    <li key={task.Id} class="slds-box slds-m-vertical_small">
+                        <div class="slds-grid slds-grid_align-spread">
+                            <div>
+                                <!-- Recently Created ToDo List Name & Description show -->
+                                <h2>Task Title : <strong>{task.TaskName__c}</strong></h2>
+                                <h2>Task : <p>{task.Description__c}</p></h2>
+                            </div>
+                            <div>
+                                <!-- Update Icon -->
+                                <lightning-button-icon icon-name="utility:edit" alternative-text="Complete" title="Edit" onclick={handleComplete} data-id={task.Id}></lightning-button-icon>
+                               <!-- Delete Icon -->
+                                <lightning-button-icon icon-name="utility:delete" alternative-text="Delete" title="Delete" onclick={handleDelete} data-id={task.Id}></lightning-button-icon>
+                            </div>
+                        </div>
+                    </li>
+                </template>
+            </ul>
+        </template>
+
+        <template if:false={tasks}>
+          <p class="slds-p-around_medium slds-text-color_error">No Tasks Found!</p>
+        </template>
+
+    <!-- </lightning-layout-item> -->
+ </lightning-layout>
+
+
+ </lightning-layout>
+</template>
+
+
